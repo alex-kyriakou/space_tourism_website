@@ -8,13 +8,13 @@
   --clr-light: 231 77% 90%;
   --clr-white: 0 0% 100%;
 
-  /* font-sizes */
-  --fs-900: 9.375rem;
-  --fs-800: 6.25rem;
-  --fs-700: 3.5rem;
-  --fs-600: 2rem;
+  /* font-sizes - Mobile Screens */
+  --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+  --fs-800: 3.5rem;
+  --fs-700: 1.5rem;
+  --fs-600: 1rem;
   --fs-500: 1.75rem;
-  --fs-400: 1.125rem;
+  --fs-400: 0.9375rem;
   --fs-300: 1rem;
   --fs-200: 0.875rem;
 
@@ -22,6 +22,27 @@
   --ff-serif: "Bellefair", serif;
   --ff-sans-cond: "Barlow Condensed", sans-serif;
   --ff-sans-normal: "Barlow", sans-serif;
+}
+
+// Tablet Screens
+@media (min-width: 35em) {
+  :root {
+    --fs-800: 5rem;
+    --fs-700: 2.5rem;
+    --fs-600: 1.5rem;
+    --fs-400: 1rem;
+  }
+}
+
+// Larger Screens
+@media (min-width: 45em) {
+  :root {
+    /* font-sizes */
+    --fs-800: 6.25rem;
+    --fs-700: 3.5rem;
+    --fs-600: 2rem;
+    --fs-400: 1.125rem;
+  }
 }
 
 /* ------------------- */
@@ -66,6 +87,9 @@ body {
   background-color: hsl(var(--clr-dark));
   line-height: 1.5;
   min-height: 100vh;
+
+  display: grid;
+  grid-template-rows: min-content 1fr;
 }
 
 /* make images easier to work with */
@@ -106,9 +130,20 @@ select {
   gap: var(--gap, 1rem);
 }
 
+.flex-cl {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: var(--gap, 1rem);
+}
+
 .grid {
   display: grid;
   gap: var(--gap, 1rem);
+}
+
+.d-block {
+  display: block;
 }
 
 // .flow > * + * {
@@ -118,13 +153,51 @@ select {
 
 .flow > *:not(:first-child) {
   margin-top: var(--flow-space, 1rem);
-  outline: 1px solid red;
+  outline: 1px solid hsl(var(--clr-dark)); /* change to Red color for visivility */
 }
 
 .container {
   padding-inline: 2em;
   margin-inline: auto;
   max-width: 80rem;
+}
+
+.grid-container {
+  text-align: center;
+  border: 5px solid limegreen;
+  display: grid;
+  place-items: center;
+  padding-inline: 1rem;
+}
+
+.grid-container > * {
+  /* ch* Unit representing the width of the character "0" in the current font */
+  max-width: 50ch;
+}
+
+@media (min-width: 45em) {
+  .grid-container {
+    column-gap: var(--container-gap, 2rem);
+    grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
+        2rem,
+        1fr
+      );
+  }
+
+  .grid-container > *:first-child {
+    grid-column: 2;
+    outline: 1px solid red;
+  }
+
+  .grid-container > *:last-child {
+    grid-column: 3;
+    outline: 1px solid yellow;
+  }
+
+  .grid-container--home {
+    align-items: end;
+    padding-bottom: 6rem;
+  }
 }
 
 .sr-only {
@@ -238,8 +311,9 @@ select {
 /* ------------------- */
 
 .large-button {
+  font-size: 2rem;
   position: relative;
-  display: grid;
+  display: inline-grid;
   z-index: 1;
   place-items: center;
   padding: 0 2em;
@@ -297,7 +371,61 @@ select {
   border-bottom: 2px solid hsl(var(--clr-white) / 0.5);
 }
 
-.underline-indicators > .active {
+.underline-indicators > .active,
+.underline-indicators > [aria-selected="true"] {
   padding: var(--underline-gap, 1rem) 0;
   border-bottom: 2px solid hsl(var(--clr-white) / 1);
+}
+
+.tab-list {
+  --gap: 3rem;
+}
+
+.dot-indicators > * {
+  /* Select all the inside children */
+  cursor: pointer;
+  border: 0;
+  border-radius: 50%;
+  aspect-ratio: 1; /* to make theme circle */
+  padding: 0.5em;
+  background-color: hsl(var(--clr-white) / 0.25);
+}
+
+.dot-indicators > *:hover,
+.dot-indicators > *:focus {
+  background-color: hsl(var(--clr-white) / 0.5);
+}
+
+.dot-indicators > [aria-selected="true"] {
+  background-color: hsl(var(--clr-white) / 1);
+}
+
+/* ------------------------------ */
+/* Page specific background       */
+/* ------------------------------ */
+
+body {
+  background-size: cover;
+  background-position: bottom center;
+}
+
+/* home -------------------------- */
+
+// Mobile BG
+.home {
+  background-image: url(../assets/home/background-home-mobile.jpg);
+}
+
+// Tablet BG
+@media (min-width: 35rem) {
+  .home {
+    background-image: url(../assets/home/background-home-tablet.jpg);
+  }
+}
+
+// Desktop BG
+@media (min-width: 45rem) {
+  .home {
+    background-image: url(../assets/home/background-home-desktop.jpg);
+  }
 }

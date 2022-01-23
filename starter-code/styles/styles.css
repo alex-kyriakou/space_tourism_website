@@ -412,18 +412,22 @@ body {
 /* home -------------------------- */
 
 // Mobile BG
+.body {
+  background-size: cover;
+  background-position: bottom center;
+}
+/* home */
 .home {
   background-image: url(../assets/home/background-home-mobile.jpg);
 }
 
-// Tablet BG
 @media (min-width: 35rem) {
   .home {
+    background-position: center center;
     background-image: url(../assets/home/background-home-tablet.jpg);
   }
 }
 
-// Desktop BG
 @media (min-width: 45rem) {
   .home {
     background-image: url(../assets/home/background-home-desktop.jpg);

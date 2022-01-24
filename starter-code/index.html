@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="styles/styles.css" />
 
     <title>Frontend Mentor | Space tourism website</title>
+
+    <!-- Custom JS  -->
+    <script src="app.js" defer></script>
   </head>
   <body class="home">
     <header class="primary-header flex">
@@ -32,8 +35,14 @@
         />
       </div>
 
-      <!-- <nav>
+      <button class="mobile-nav-toggle" aria-controls="primary-navigation">
+        <span class="sr-only" aria-expanded="false">Menu</span>
+      </button>
+
+      <nav>
         <ul
+          id="primary-navigation"
+          data-visible="false"
           class="primary-navigation flex primary-navigation underline-indicators"
         >
           <li class="active">
@@ -69,7 +78,7 @@
             >
           </li>
         </ul>
-      </nav> -->
+      </nav>
     </header>
 
     <div class="grid-container grid-container--home">

@@ -6,9 +6,12 @@ navToggle.addEventListener("click", () => {
 
   if (visibility === "false") {
     nav.setAttribute("data-visible", "true");
+    navToggle.setAttribute("aria-expanded", true);
   } else {
     nav.setAttribute("data-visible", "false");
+    navToggle.setAttribute("aria-expanded", "false");
   }
 
-  console.log(visibility);
+  console.log(navToggle.getAttribute("aria-expanded"));
+  console.log(nav.getAttribute("data-visible"));
 });

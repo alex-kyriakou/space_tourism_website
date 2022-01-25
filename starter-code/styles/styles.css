@@ -377,6 +377,7 @@ select {
     background: hsl(var(--clr-dark) / 0.95);
     /* backdrop-filter: blur(1.5rem); */
     transform: translateX(100%);
+    transition: transform 0.2s ease-in-out;
   }
 
   @supports (backdrop-filter: blur(1rem)) {
@@ -407,6 +408,10 @@ select {
     aspect-ratio: 1;
     border: 0;
     cursor: pointer;
+  }
+
+  .mobile-nav-toggle[aria-expanded="true"] {
+    background-image: url(../assets/shared/icon-close.svg);
   }
 }
 

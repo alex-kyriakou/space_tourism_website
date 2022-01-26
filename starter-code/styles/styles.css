@@ -8,7 +8,7 @@
   --clr-light: 231 77% 90%;
   --clr-white: 0 0% 100%;
 
-  /* font-sizes - Mobile Screens */
+  /* font-sizes */
   --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
   --fs-800: 3.5rem;
   --fs-700: 1.5rem;
@@ -24,7 +24,6 @@
   --ff-sans-normal: "Barlow", sans-serif;
 }
 
-// Tablet Screens
 @media (min-width: 35em) {
   :root {
     --fs-800: 5rem;
@@ -34,7 +33,6 @@
   }
 }
 
-// Larger Screens
 @media (min-width: 45em) {
   :root {
     /* font-sizes */
@@ -48,6 +46,8 @@
 /* ------------------- */
 /* Reset               */
 /* ------------------- */
+
+/* https://piccalil.li/blog/a-modern-css-reset/ */
 
 /* Box sizing */
 *,
@@ -132,13 +132,6 @@ select {
   gap: var(--gap, 1rem);
 }
 
-.flex-cl {
-  display: flex;
-  flex-direction: column;
-  place-items: center;
-  gap: var(--gap, 1rem);
-}
-
 .grid {
   display: grid;
   gap: var(--gap, 1rem);
@@ -148,14 +141,8 @@ select {
   display: block;
 }
 
-// .flow > * + * {
-//   margin-top: 1rem;
-//   outline: 1px solid red;
-// }
-
-.flow > *:not(:first-child) {
+.flow > *:where(:not(:first-child)) {
   margin-top: var(--flow-space, 1rem);
-  outline: 1px solid hsl(var(--clr-dark)); /* change to Red color for visivility */
 }
 
 .container {
@@ -166,44 +153,40 @@ select {
 
 .grid-container {
   text-align: center;
-  border: 5px solid limegreen;
   display: grid;
   place-items: center;
   padding-inline: 1rem;
 }
 
-.grid-container > * {
-  /* ch* Unit representing the width of the character "0" in the current font */
+.grid-container * {
   max-width: 50ch;
 }
 
 @media (min-width: 45em) {
   .grid-container {
+    text-align: left;
     column-gap: var(--container-gap, 2rem);
-    grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
-        2rem,
+    grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
+        1rem,
         1fr
       );
   }
 
   .grid-container > *:first-child {
     grid-column: 2;
-    outline: 1px solid red;
   }
 
   .grid-container > *:last-child {
     grid-column: 3;
-    outline: 1px solid yellow;
   }
 
   .grid-container--home {
+    padding-bottom: max(6rem, 20vh);
     align-items: end;
-    padding-bottom: 6rem;
   }
 }
 
 .sr-only {
-  /* for screen readers only */
   position: absolute;
   width: 1px;
   height: 1px;
@@ -299,7 +282,7 @@ select {
   font-family: var(--ff-sans-cond);
   font-size: var(--fs-500);
   text-transform: uppercase;
-  letter-spacing: 4.75px;
+  letter-spacing: 4.72px;
 }
 
 .numbered-title span {
@@ -309,18 +292,18 @@ select {
 }
 
 /* ------------------- */
-/* Components   */
+/* Compontents         */
 /* ------------------- */
 
 .large-button {
   font-size: 2rem;
   position: relative;
-  display: inline-grid;
   z-index: 1;
+  display: inline-grid;
   place-items: center;
   padding: 0 2em;
-  aspect-ratio: 1;
   border-radius: 50%;
+  aspect-ratio: 1;
   text-decoration: none;
 }
 
@@ -328,12 +311,12 @@ select {
   content: "";
   position: absolute;
   z-index: -1;
-  background: hsl(var(--clr-white) / 0.1);
   width: 100%;
   height: 100%;
+  background: hsl(var(--clr-white) / 0.1);
   border-radius: 50%;
   opacity: 0;
-  transition: opacity 0.35s linear, transform 0.2s ease-in-out;
+  transition: opacity 500ms linear, transform 750ms ease-in-out;
 }
 
 .large-button:hover::after,
@@ -342,77 +325,26 @@ select {
   transform: scale(1.5);
 }
 
+/* primary-header */
+
+.logo {
+  margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.primary-header {
+  justify-content: space-between;
+  align-items: center;
+}
+
 .primary-navigation {
-  --underline-gap: 2rem;
+  --gap: clamp(1.5rem, 5vw, 3.5rem);
+  --underline-gap: 2.1rem;
   list-style: none;
-  padding: 0;
+  // padding-inline: 3rem;
+  // padding: 0;
   margin: 0;
-  background: hsl(var(--clr-dark) / 0.95);
-  /* backdrop-filter: blur(1.5rem); */
-}
-
-@supports (backdrop-filter: blur(1rem)) {
-  .primary-navigation {
-    background: hsl(var(--clr-white) / 0.05);
-    backdrop-filter: blur(1.5rem);
-  }
-}
-
-.mobile-nav-toggle {
-  display: none;
-}
-
-@media (max-width: 35rem) {
-  .primary-navigation {
-    // --gap: 8rem;
-    --underline-gap: 0.5rem;
-    position: fixed;
-    z-index: 1000;
-    background: black;
-    inset: 0 0 0 30%;
-    list-style: none;
-    padding: min(20rem, 15vh) 2rem;
-    margin: 0;
-    flex-direction: column;
-    background: hsl(var(--clr-dark) / 0.95);
-    /* backdrop-filter: blur(1.5rem); */
-    transform: translateX(100%);
-    transition: transform 0.2s ease-in-out;
-  }
-
-  @supports (backdrop-filter: blur(1rem)) {
-    .primary-navigation {
-      background: hsl(var(--clr-white) / 0.05);
-      backdrop-filter: blur(1.5rem);
-    }
-  }
-
-  .primary-navigation.underline-indicators > .active {
-    border: 0;
-  }
-
-  .primary-navigation[data-visible="true"] {
-    transform: translateX(0);
-  }
-
-  .mobile-nav-toggle {
-    display: block;
-    position: absolute;
-    z-index: 2000;
-    right: 1rem;
-    top: 2rem;
-    background: transparent;
-    background-image: url(../assets/shared/icon-hamburger.svg);
-    background-repeat: no-repeat;
-    width: 1.5rem;
-    aspect-ratio: 1;
-    border: 0;
-    cursor: pointer;
-  }
-
-  .mobile-nav-toggle[aria-expanded="true"] {
-    background-image: url(../assets/shared/icon-close.svg);
-  }
+  background: hsl(var(--clr-white) / 0.05);
+  backdrop-filter: blur(1.5rem);
 }
 
 .primary-navigation a {
@@ -424,36 +356,117 @@ select {
   margin-right: 0.5em;
 }
 
+.mobile-nav-toggle {
+  display: none;
+}
+
+@media (max-width: 35rem) {
+  .primary-navigation {
+    --underline-gap: 0.5rem;
+    position: fixed;
+    z-index: 1000;
+    inset: 0 0 0 30%;
+    list-style: none;
+    padding: min(20rem, 15vh) 2rem;
+    margin: 0;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 500ms ease-in-out;
+  }
+
+  .primary-navigation[data-visible="true"] {
+    transform: translateX(0);
+  }
+
+  .primary-navigation.underline-indicators > .active {
+    border: 0;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    z-index: 2000;
+    right: 1rem;
+    top: 2rem;
+    background: transparent;
+    background-image: url(../assets/shared/icon-hamburger.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1.5rem;
+    aspect-ratio: 1;
+    border: 0;
+  }
+
+  .mobile-nav-toggle[aria-expanded="true"] {
+    background-image: url(../assets/shared/icon-close.svg);
+  }
+
+  .mobile-nav-toggle:focus-visible {
+    outline: 5px solid white;
+    outline-offset: 5px;
+  }
+}
+
+@media (min-width: 35em) {
+  .primary-navigation {
+    padding-inline: clamp(3rem, 7vw, 7rem);
+  }
+}
+
+@media (min-width: 35em) and (max-width: 45em) {
+  .primary-navigation a > span {
+    display: none;
+  }
+}
+
+@media (min-width: 45em) {
+  .primary-header::after {
+    content: "";
+    display: block;
+    position: relative;
+    height: 1px;
+    width: 100%;
+    background: red;
+    order: 1;
+    margin-right: -2.5rem;
+    background: hsl(var(--clr-white) / 0.25);
+  }
+
+  nav {
+    order: 2;
+  }
+
+  .primary-navigation {
+    margin-block: 2rem;
+  }
+}
+
 .underline-indicators > * {
-  /* We select directly all the child elements */
   cursor: pointer;
   padding: var(--underline-gap, 1rem) 0;
   border: 0;
-  border-bottom: 2px solid hsl(var(--clr-white) / 0);
+  border-bottom: 0.2rem solid hsl(var(--clr-white) / 0);
 }
 
-.underline-indicators > * :hover,
-.underline-indicators > * :focus {
-  padding: var(--underline-gap, 1rem) 0;
-  border-bottom: 2px solid hsl(var(--clr-white) / 0.5);
+.underline-indicators > *:hover,
+.underline-indicators > *:focus {
+  border-color: hsl(var(--clr-white) / 0.5);
 }
 
 .underline-indicators > .active,
 .underline-indicators > [aria-selected="true"] {
-  padding: var(--underline-gap, 1rem) 0;
-  border-bottom: 2px solid hsl(var(--clr-white) / 1);
+  color: hsl(var(--clr-white) / 1);
+  border-color: hsl(var(--clr-white) / 1);
 }
 
 .tab-list {
-  --gap: 3rem;
+  --gap: 2rem;
 }
 
 .dot-indicators > * {
-  /* Select all the inside children */
   cursor: pointer;
   border: 0;
   border-radius: 50%;
-  aspect-ratio: 1; /* to make theme circle */
   padding: 0.5em;
   background-color: hsl(var(--clr-white) / 0.25);
 }
@@ -467,19 +480,10 @@ select {
   background-color: hsl(var(--clr-white) / 1);
 }
 
-/* ------------------------------ */
-/* Page specific background       */
-/* ------------------------------ */
-
+/* ----------------------------- */
+/* Page specific background      */
+/* ----------------------------- */
 body {
-  background-size: cover;
-  background-position: bottom center;
-}
-
-/* home ---------------------------- */
-
-// Mobile BG
-.body {
   background-size: cover;
   background-position: bottom center;
 }

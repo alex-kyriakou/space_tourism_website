@@ -489,7 +489,7 @@ body {
 }
 
 .numbered-title {
-  grid-area: "title";
+  grid-area: title;
 }
 
 /* Destination Layout */
@@ -504,16 +504,16 @@ body {
 }
 
 .grid-container--destination > img {
-  grid-area: "image";
+  grid-area: image;
   max-width: 60%;
 }
 
 .grid-container--destination > .tab-list {
-  grid-area: "tabs";
+  grid-area: tabs;
 }
 
 .grid-container--destination > .destination-info {
-  grid-area: "content";
+  grid-area: content;
 }
 
 .destination-meta {
@@ -556,5 +556,13 @@ body {
   .grid-container--home {
     padding-bottom: max(6rem, 20vh);
     align-items: end;
+  }
+
+  .grid-container--destination {
+    --flow-space: 2rem;
+    grid-template-areas:
+      ". title title ."
+      ". image tabs ."
+      ". image content .";
   }
 }

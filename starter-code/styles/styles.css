@@ -701,8 +701,12 @@ body {
 /* Functionality  */
 /* -------------- */
 
-.visibility {
+.notVisible {
   visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
 }
 
 [role="tab"]:focus {
